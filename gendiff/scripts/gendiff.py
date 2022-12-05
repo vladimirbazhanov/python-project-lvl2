@@ -11,5 +11,13 @@ def main():
 
     args = parser.parse_args()
 
-    diff = generate_diff(args.first_file, args.second_file)
-    print(diff)
+    diff_dict = generate_diff(args.first_file, args.second_file)
+
+    print_diff_dict(diff_dict)
+
+
+def print_diff_dict(diff_dict):
+    print('{\n')
+    for key, value in sorted(diff_dict.items()):
+        print(f' {key}: {value}')
+    print('}')
