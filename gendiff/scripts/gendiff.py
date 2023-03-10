@@ -14,5 +14,3 @@ def main():
     diff_string = generate_diff(args.first_file, args.second_file)
 
     print(diff_string)
-
-
