@@ -1,25 +1,12 @@
 from gendiff.loader import load_file
+from gendiff.parser import parse
 
 
 def generate_diff(file_path1, file_path2):
-    file1_json_content = load_file(file_path1)
-    file2_json_content = load_file(file_path2)
+    file1_content = load_file(file_path1)
+    file2_content = load_file(file_path2)
 
-    diff_dict = {}
-
-    for key in file1_json_content.keys() | file2_json_content.keys():
-        diff_dict[key] = {}
-        diff_dict[key]['file1_value'] = file1_json_content.get(key)
-        diff_dict[key]['file2_value'] = file2_json_content.get(key)
-        if not diff_dict[key]['file1_value']:
-            diff_dict[key]['action'] = 'added'
-        if not diff_dict[key]['file2_value']:
-            diff_dict[key]['action'] = 'removed'
-        if diff_dict[key]['file1_value'] == diff_dict[key]['file2_value']:
-            diff_dict[key]['action'] = 'unchanged'
-        if diff_dict[key]['file1_value'] and diff_dict[key]['file2_value']:
-            if diff_dict[key]['file1_value'] != diff_dict[key]['file2_value']:
-                diff_dict[key]['action'] = 'changed'
+    diff_dict = parse(file1_content, file2_content)
 
     diff_string = "{\n"
 

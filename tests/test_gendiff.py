@@ -1,10 +1,16 @@
 from gendiff.gendiff import generate_diff
-import pytest
-
 
 def test_generate_diff_json():
     result = generate_diff('tests/fixtures/json/file_001.json', 'tests/fixtures/json/file_002.json')
     f = open('tests/fixtures/json/file_001_file_002.result.txt', 'r')
+    expected_result = f.read()
+    f.close()
+    assert result == expected_result
+
+
+def test_generate_diff_r_json():
+    result = generate_diff('tests/fixtures/r_json/r_file_001.json', 'tests/fixtures/r_json/r_file_002.json')
+    f = open('tests/fixtures/r_json/r_file_001_r_file_002.result.txt', 'r')
     expected_result = f.read()
     f.close()
     assert result == expected_result
