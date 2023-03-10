@@ -16,18 +16,9 @@ def generate_diff(file_path1, file_path2):
         if not diff[key]['file2_value']:
             diff[key]['action'] = 'removed'
         if diff[key]['file1_value'] == diff[key]['file2_value']:
-            diff[key]['action'] = 'same'
-
-    # for key, value in file1_json_content.items():
-    #     diff[key] = {}
-    #
-    #     diff[key]['file1_value'] = value
-    #     diff[key]['file2_value'] = file2_json_content.get(key, None)
-    #
-    #
-    # for key in file2_json_content.keys() - file1_json_content.keys():
-    #     diff[key] = {}
-    #     diff[key]['file1_value'] = None
-    #     diff[key]['file2_value'] = file2_json_content[key]
+            diff[key]['action'] = 'unchanged'
+        if diff[key]['file1_value'] and diff[key]['file2_value']:
+            if diff[key]['file1_value'] != diff[key]['file2_value']:
+                diff[key]['action'] = 'changed'
 
     return diff
