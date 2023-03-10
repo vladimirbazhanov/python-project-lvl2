@@ -1,9 +1,8 @@
-import json
-
+from gendiff.loader import load_file
 
 def generate_diff(file_path1, file_path2):
-    file1_json_content = json.load(open(file_path1))
-    file2_json_content = json.load(open(file_path2))
+    file1_json_content = load_file(file_path1)
+    file2_json_content = load_file(file_path2)
 
     diff_dict = {}
 
