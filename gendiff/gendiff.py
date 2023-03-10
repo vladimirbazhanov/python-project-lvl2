@@ -23,6 +23,12 @@ def generate_diff(file_path1, file_path2):
 
     diff_string = "{\n"
 
+    for key, info_dict in diff_dict.items():
+        if type(info_dict['file1_value']) == bool:
+            info_dict['file1_value'] = str(info_dict['file1_value']).lower()
+        if type(info_dict['file2_value']) == bool:
+            info_dict['file2_value'] = str(info_dict['file2_value']).lower()
+
     for key, info_dict in sorted(diff_dict.items()):
         if info_dict['action'] == 'added':
             diff_string += f"  + {key}: {info_dict['file2_value']}\n"

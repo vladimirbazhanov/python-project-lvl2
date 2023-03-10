@@ -1,2 +1,8 @@
 [flake8]
-max-line-length = 120
+accept-encodings = utf-8
+max-complexity = 16
+statistics = True
+max-line-length = 80
+doctests = True
+enable-extensions = G
+
