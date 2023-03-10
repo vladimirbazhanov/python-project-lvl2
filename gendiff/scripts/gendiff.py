@@ -11,26 +11,8 @@ def main():
 
     args = parser.parse_args()
 
-    diff_dict = generate_diff(args.first_file, args.second_file)
-
-    diff_string = print_diff_dict(diff_dict)
+    diff_string = generate_diff(args.first_file, args.second_file)
 
     print(diff_string)
 
-def print_diff_dict(diff_dict):
-    result_string = "{\n"
-
-    for key, info_dict in sorted(diff_dict.items()):
-        if info_dict['action'] == 'added':
-            result_string += f"  + {key}: {info_dict['file2_value']}\n"
-        if info_dict['action'] == 'removed':
-            result_string += f"  - {key}: {info_dict['file1_value']}\n"
-        if info_dict['action'] == 'changed':
-            result_string += f"  - {key}: {info_dict['file1_value']}\n"
-            result_string += f"  + {key}: {info_dict['file2_value']}\n"
-        if info_dict['action'] == 'unchanged':
-            result_string += f"    {key}: {info_dict['file1_value']}\n"
-    result_string += "}\n"
-
-    return result_string
 
