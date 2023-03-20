@@ -1,4 +1,4 @@
-def generate_tree(initial_dict,final_dict):
+def generate_tree(initial_dict, final_dict):
     tree = {}
     tree_keys = list(initial_dict.keys() | final_dict.keys())
     for key in tree_keys:
@@ -29,7 +29,7 @@ def generate_node(key, initial_dict, final_dict):
         }
     elif type(initial_value) == dict and type(final_value) == dict:
         node = {
-            'action': 'level',
+            'action': 'nested',
             'value': generate_tree(initial_value, final_value)
         }
     elif initial_value == final_value:
@@ -40,8 +40,7 @@ def generate_node(key, initial_dict, final_dict):
     elif initial_value != final_value:
         node = {
             'action': 'changed',
-            'initial_value': process_value(initial_value),
-            'final_value': process_value(final_value)
+            'value': [process_value(initial_value), process_value(final_value)]
         }
 
     return node
