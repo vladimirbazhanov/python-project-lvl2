@@ -1,8 +1,6 @@
-import pdb
-from pprint import pprint
 from gendiff.loader import load_file
 from gendiff.parser import generate_tree
-from gendiff.stylish import format_diff_dict
+from gendiff.formatters.stylish import get_stylish
 
 
 def generate_diff(file_path1, file_path2):
@@ -11,6 +9,4 @@ def generate_diff(file_path1, file_path2):
 
     diff_dict = generate_tree(file1_content, file2_content)
 
-    pprint(diff_dict)
-
-    return format_diff_dict(diff_dict)
+    return get_stylish(diff_dict)
