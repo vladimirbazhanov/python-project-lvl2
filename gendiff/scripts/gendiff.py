@@ -13,7 +13,7 @@ def main():
         '--format',
         required=False,
         metavar='FORMAT',
-        default='plain',
+        default='stylish',
         help='set format of output'
     )
 

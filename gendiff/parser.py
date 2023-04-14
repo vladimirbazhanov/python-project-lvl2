@@ -1,6 +1,3 @@
-import pdb
-
-
 def generate_tree(initial_dict, final_dict):
     return {'children': generate_nodes(initial_dict, final_dict)}
 
