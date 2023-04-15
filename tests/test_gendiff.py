@@ -76,5 +76,4 @@ def test_generate_diff_recursive_yaml_to_stylish():
     result = generate_diff(R_YAML_FILES[0], R_YAML_FILES[1], 'stylish')
     with open('tests/fixtures/r_yaml/r_file_001_r_file_002.stylish.txt', 'r') as fixture:
         expected_result = fixture.read()
-        pdb.set_trace()
         assert result == expected_result
