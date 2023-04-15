@@ -7,36 +7,7 @@ SIGN_ADD = '+'
 SIGN_DEL = '-'
 
 
-def get_indent(depth):
-    if depth == 1:
-        return INDENT
-    else:
-        return INDENT + (DEEP_INDENT * (depth - 1))
-
-
-def convert_to_string(value, depth):
-    current_indent = get_indent(depth)
-
-    if isinstance(value, dict):
-        lines = []
-        for key, val in value.items():
-            lines.append(
-                f"{INDENT + current_indent + DEEP_INDENT}{key}:"
-                f" {convert_to_string(val, depth + 1)}")
-        result = '\n'.join(lines)
-        return f'{{\n{result}\n  {current_indent}}}'
-
-    elif isinstance(value, bool):
-        return 'true' if value else 'false'
-
-    elif value is None:
-        return 'null'
-
-    else:
-        return value
-
-
-def get_stylish(tree, depth=0):
+def format(tree, depth=0):
 
     def iter_(node, depth):
         indent = get_indent(depth)
@@ -72,3 +43,32 @@ def get_stylish(tree, depth=0):
     lines = map(lambda child: iter_(child, depth + 1), children)
     result = itertools.chain("{", lines, "}")
     return '\n'.join(result) + '\n'
+
+
+def get_indent(depth):
+    if depth == 1:
+        return INDENT
+    else:
+        return INDENT + (DEEP_INDENT * (depth - 1))
+
+
+def convert_to_string(value, depth):
+    current_indent = get_indent(depth)
+
+    if isinstance(value, dict):
+        lines = []
+        for key, val in value.items():
+            lines.append(
+                f"{INDENT + current_indent + DEEP_INDENT}{key}:"
+                f" {convert_to_string(val, depth + 1)}")
+        result = '\n'.join(lines)
+        return f'{{\n{result}\n  {current_indent}}}'
+
+    elif isinstance(value, bool):
+        return 'true' if value else 'false'
+
+    elif value is None:
+        return 'null'
+
+    else:
+        return value
