@@ -1,5 +1,4 @@
 import argparse
-
 from gendiff.loader import load_file
 from gendiff.gendiff import generate_diff
 
@@ -21,7 +20,7 @@ def main():
     )
 
     args = parser.parse_args()
-
+    
     file1_content = load_file(args.first_file)
     file2_content = load_file(args.second_file)
 
