@@ -42,7 +42,7 @@ def format(tree, depth=0):
     children = sorted(tree.get('children'), key=lambda node: node['key'])
     lines = map(lambda child: iter_(child, depth + 1), children)
     result = itertools.chain("{", lines, "}")
-    return '\n'.join(result) + '\n'
+    return '\n'.join(result)
 
 
 def get_indent(depth):
