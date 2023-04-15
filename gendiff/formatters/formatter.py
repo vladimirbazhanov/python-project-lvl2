@@ -1,7 +1,7 @@
 import importlib
 
 
-ALLOWED_FORMATS = ['plain', 'stylish']
+ALLOWED_FORMATS = ['plain', 'stylish', 'json']
 
 
 def format_diff(diff_tree, format):
