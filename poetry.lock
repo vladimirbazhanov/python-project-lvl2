@@ -217,7 +217,7 @@ tests = ["asttokens", "littleutils", "pytest", "rich"]
 name = "flake8"
 version = "6.0.0"
 description = "the modular source code checker: pep8 pyflakes and co"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.8.1"
 files = [
@@ -337,7 +337,7 @@ traitlets = "*"
 name = "mccabe"
 version = "0.7.0"
 description = "McCabe checker, plugin for flake8"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -477,7 +477,7 @@ tests = ["pytest"]
 name = "pycodestyle"
 version = "2.10.0"
 description = "Python style guide checker"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -489,7 +489,7 @@ files = [
 name = "pyflakes"
 version = "3.0.1"
 description = "passive checker of Python programs"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -709,4 +709,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "aa91d19cb0ea7bae2cc6d4c38a83567c5ed8fa8fcb92f9410b85bb4415582b95"
+content-hash = "8391fd7868e218ee8bdda2646625c323d0f49bf860d1eaa8b867d384d604a97e"
