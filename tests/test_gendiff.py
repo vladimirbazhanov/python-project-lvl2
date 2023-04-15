@@ -9,9 +9,15 @@ def test_generate_diff_json():
         assert result == expected_result
 
 
-def test_generate_diff_r_json():
-    result = generate_diff('tests/fixtures/r_json/r_file_001.json', 'tests/fixtures/r_json/r_file_002.json')
-    with open('tests/fixtures/r_json/r_file_001_r_file_002.result.txt', 'r') as fixture:
+def test_generate_diff_recursive_json_to_plain():
+    result = generate_diff('tests/fixtures/r_json/r_file_001.json', 'tests/fixtures/r_json/r_file_002.json', 'plain')
+    with open('tests/fixtures/r_json/r_file_001_r_file_002.plain.txt', 'r') as fixture:
+        expected_result = fixture.read()
+        assert result == expected_result
+
+def test_generate_diff_recursive_json_to_stylish():
+    result = generate_diff('tests/fixtures/r_json/r_file_001.json', 'tests/fixtures/r_json/r_file_002.json', 'stylish')
+    with open('tests/fixtures/r_json/r_file_001_r_file_002.stylish.txt', 'r') as fixture:
         expected_result = fixture.read()
         assert result == expected_result
 

@@ -3,8 +3,8 @@ import itertools
 
 INDENT = '  '
 DEEP_INDENT = '    '
-SIGN_ADD = '+'
-SIGN_DEL = '-'
+ADDED = '+'
+REMOVED = '-'
 
 
 def format(tree, depth=0):
@@ -13,12 +13,12 @@ def format(tree, depth=0):
         indent = get_indent(depth)
 
         if node['kind'] == 'removed':
-            return f"{indent}{SIGN_DEL} {node['key']}:" \
-                   f" {convert_to_string(node['value'], depth)}"
+            return f"{indent}{REMOVED} {node['key']}:" \
+                   f" {to_s(node['value'], depth)}"
 
         elif node['kind'] == 'added':
-            return f"{indent}{SIGN_ADD} {node['key']}:" \
-                   f" {convert_to_string(node['value'], depth)}"
+            return f"{indent}{ADDED} {node['key']}:" \
+                   f" {to_s(node['value'], depth)}"
 
         elif node['kind'] == 'nested':
             node_children = sorted(
@@ -30,16 +30,16 @@ def format(tree, depth=0):
 
         elif node['kind'] == 'unchanged':
             return f"{indent}  {node['key']}:" \
-                   f" {convert_to_string(node['value'], depth)}"
+                   f" {to_s(node['value'], depth)}"
 
         elif node['kind'] == 'changed':
-            line_1 = f"{indent}{SIGN_DEL} {node['key']}:" \
-                     f" {convert_to_string(node['value'][0], depth)}\n"
-            line_2 = f"{indent}{SIGN_ADD} {node['key']}:" \
-                     f" {convert_to_string(node['value'][1], depth)}"
+            line_1 = f"{indent}{REMOVED} {node['key']}:" \
+                     f" {to_s(node['value'][0], depth)}\n"
+            line_2 = f"{indent}{ADDED} {node['key']}:" \
+                     f" {to_s(node['value'][1], depth)}"
             return line_1 + line_2
 
-    children = sorted(tree.get('children'), key=lambda item: item['key'])
+    children = sorted(tree.get('children'), key=lambda node: node['key'])
     lines = map(lambda child: iter_(child, depth + 1), children)
     result = itertools.chain("{", lines, "}")
     return '\n'.join(result) + '\n'
@@ -52,7 +52,7 @@ def get_indent(depth):
         return INDENT + (DEEP_INDENT * (depth - 1))
 
 
-def convert_to_string(value, depth):
+def to_s(value, depth):
     current_indent = get_indent(depth)
 
     if isinstance(value, dict):
@@ -60,15 +60,12 @@ def convert_to_string(value, depth):
         for key, val in value.items():
             lines.append(
                 f"{INDENT + current_indent + DEEP_INDENT}{key}:"
-                f" {convert_to_string(val, depth + 1)}")
+                f" {to_s(val, depth + 1)}")
         result = '\n'.join(lines)
         return f'{{\n{result}\n  {current_indent}}}'
-
     elif isinstance(value, bool):
-        return 'true' if value else 'false'
-
+        return str(value).lower()
     elif value is None:
         return 'null'
-
     else:
         return value
