@@ -13,4 +13,5 @@ def load_file(file_path):
             file_content = yaml.safe_load(file)
         else:
             raise Exception('File type not supported: ' + file_path)
+
     return file_content
