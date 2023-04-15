@@ -2,4 +2,4 @@ import json
 
 
 def format(tree):
-    return json.dumps({'diff': tree['children']})
+    return json.dumps({'diff': tree['children']}, sort_keys=True)
