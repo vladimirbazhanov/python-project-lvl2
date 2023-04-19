@@ -21,9 +21,9 @@ def read_expected_result(from_format, to_format):
 
 
 file_set_1 = [
-    [json_files[0], json_files[1], 'plain',   read_expected_result('json', 'plain')],
+    [json_files[0], json_files[1], 'plain', read_expected_result('json', 'plain')],
     [json_files[0], json_files[1], 'stylish', read_expected_result('json', 'stylish')],
-    [yaml_files[0], yaml_files[1], 'plain',   read_expected_result('yaml', 'plain')],
+    [yaml_files[0], yaml_files[1], 'plain', read_expected_result('yaml', 'plain')],
     [yaml_files[0], yaml_files[1], 'stylish', read_expected_result('yaml', 'stylish')]
 ]
 
