@@ -1,1 +1,0 @@
-{"diff": [{"key": "verbose", "kind": "added", "value": true}, {"key": "host", "kind": "unchanged", "value": "hexlet.io"}, {"key": "timeout", "kind": "changed", "value": [50, 20]}, {"key": "follow", "kind": "removed", "value": false}, {"key": "proxy", "kind": "removed", "value": "123.234.53.22"}]}

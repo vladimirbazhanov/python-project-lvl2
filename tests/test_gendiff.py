@@ -1,111 +1,20 @@
 import json
+import pytest
 from deepdiff import DeepDiff
 from gendiff.gendiff import generate_diff
+from conftests import file_set_1, file_set_2
 
-JSON_FILES = [
-    'tests/fixtures/json/file_001.json',
-    'tests/fixtures/json/file_002.json'
-]
+@pytest.mark.parametrize("file_1,file_2,format,expected_result", file_set_1)
+def test_generate_diff(file_1, file_2, format, expected_result):
+    result = generate_diff(file_1, file_2, format)
 
-R_JSON_FILES = [
-    'tests/fixtures/r_json/r_file_001.json',
-    'tests/fixtures/r_json/r_file_002.json'
-]
-
-YAML_FILES = [
-    'tests/fixtures/yaml/file_001.yml',
-    'tests/fixtures/yaml/file_002.yml'
-]
-
-R_YAML_FILES = [
-    'tests/fixtures/r_yaml/r_file_001.yml',
-    'tests/fixtures/r_yaml/r_file_002.yml'
-]
+    assert result == expected_result
 
 
-def test_generate_diff_json_to_plain():
-    result = generate_diff(JSON_FILES[0], JSON_FILES[1], 'plain')
-    with open('tests/fixtures/json/file_001_file_002.plain.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
+@pytest.mark.parametrize("file_1,file_2,format,expected_result", file_set_2)
+def test_generate_diff_json(file_1, file_2, format, expected_result):
+    result_json = json.loads(generate_diff(file_1, file_2, format))
+    expected_result_json = json.loads(expected_result)
 
+    assert DeepDiff(result_json, expected_result_json, ignore_order=True) == {}
 
-def test_generate_diff_json_to_stylish():
-    result = generate_diff(JSON_FILES[0], JSON_FILES[1], 'stylish')
-    with open('tests/fixtures/json/file_001_file_002.stylish.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
-
-
-def test_generate_diff_json_to_json():
-    result = json.loads(generate_diff(JSON_FILES[0], JSON_FILES[1], 'json'))
-    with open('tests/fixtures/json/file_001_file_002.json.txt', 'r') as fixture:
-        expected_result = json.loads(fixture.read())
-        sorted_result = sorted(result['diff'], key=lambda node: node['key'])
-        sorted_expected_result = sorted(expected_result['diff'], key=lambda node: node['key'])
-        assert sorted_result == sorted_expected_result
-
-
-def test_generate_diff_recursive_json_to_plain():
-    result = generate_diff(R_JSON_FILES[0], R_JSON_FILES[1], 'plain')
-    with open('tests/fixtures/r_json/r_file_001_r_file_002.plain.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
-
-
-def test_generate_diff_recursive_json_to_stylish():
-    result = generate_diff(R_JSON_FILES[0], R_JSON_FILES[1], 'stylish')
-    with open('tests/fixtures/r_json/r_file_001_r_file_002.stylish.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
-
-
-def test_generate_diff_recursive_json_to_json():
-    result = json.loads(generate_diff(R_JSON_FILES[0], R_JSON_FILES[1], 'json'))
-    with open('tests/fixtures/r_json/r_file_001_r_file_002.json.txt', 'r') as fixture:
-        expected_result = json.loads(fixture.read())
-        assert DeepDiff(result, expected_result, ignore_order=True) == {}
-
-
-def test_generate_diff_yaml_to_plain():
-    result = generate_diff(YAML_FILES[0], YAML_FILES[1], 'plain')
-    with open('tests/fixtures/yaml/file_001_file_002.plain.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
-
-
-def test_generate_diff_yaml_to_stylish():
-    result = generate_diff(YAML_FILES[0], YAML_FILES[1], 'stylish')
-    with open('tests/fixtures/yaml/file_001_file_002.stylish.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
-
-
-def test_generate_diff_yaml_to_json():
-    result = json.loads(generate_diff(YAML_FILES[0], YAML_FILES[1], 'json'))
-    with open('tests/fixtures/yaml/file_001_file_002.json.txt', 'r') as fixture:
-        expected_result = json.loads(fixture.read())
-        sorted_result = sorted(result['diff'], key=lambda node: node['key'])
-        sorted_expected_result = sorted(expected_result['diff'], key=lambda node: node['key'])
-        assert sorted_result == sorted_expected_result
-
-
-def test_generate_diff_recursive_yaml_to_plain():
-    result = generate_diff(R_YAML_FILES[0], R_YAML_FILES[1], 'plain')
-    with open('tests/fixtures/r_yaml/r_file_001_r_file_002.plain.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
-
-
-def test_generate_diff_recursive_yaml_to_stylish():
-    result = generate_diff(R_YAML_FILES[0], R_YAML_FILES[1], 'stylish')
-    with open('tests/fixtures/r_yaml/r_file_001_r_file_002.stylish.txt', 'r') as fixture:
-        expected_result = fixture.read()
-        assert result == expected_result
-
-
-def test_generate_diff_recursive_yaml_to_json():
-    result = json.loads(generate_diff(R_YAML_FILES[0], R_YAML_FILES[1], 'json'))
-    with open('tests/fixtures/r_yaml/r_file_001_r_file_002.json.txt', 'r') as fixture:
-        expected_result = json.loads(fixture.read())
-        assert DeepDiff(result, expected_result, ignore_order=True) == {}
