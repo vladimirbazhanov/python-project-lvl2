@@ -13,7 +13,7 @@ test:
 	poetry run pytest
 
 test-coverage:
-	poetry run pytest --cov
+	poetry run coverage run -m pytest && poetry run coverage report -m
 
 publish:
 	poetry publish --dry-run
