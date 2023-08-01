@@ -14,11 +14,11 @@ def format(tree, depth=0):
 
         if node['kind'] == 'removed':
             return f"{indent}{REMOVED} {node['key']}:" \
-                   f" {to_s(node['value'], depth)}"
+                   f" {to_string(node['value'], depth)}"
 
         elif node['kind'] == 'added':
             return f"{indent}{ADDED} {node['key']}:" \
-                   f" {to_s(node['value'], depth)}"
+                   f" {to_string(node['value'], depth)}"
 
         elif node['kind'] == 'nested':
             node_children = sorted(
@@ -30,13 +30,13 @@ def format(tree, depth=0):
 
         elif node['kind'] == 'unchanged':
             return f"{indent}  {node['key']}:" \
-                   f" {to_s(node['value'], depth)}"
+                   f" {to_string(node['value'], depth)}"
 
         elif node['kind'] == 'changed':
             line_1 = f"{indent}{REMOVED} {node['key']}:" \
-                     f" {to_s(node['value'][0], depth)}\n"
+                     f" {to_string(node['value'][0], depth)}\n"
             line_2 = f"{indent}{ADDED} {node['key']}:" \
-                     f" {to_s(node['value'][1], depth)}"
+                     f" {to_string(node['value'][1], depth)}"
             return line_1 + line_2
 
     children = sorted(tree.get('children'), key=lambda node: node['key'])
@@ -46,13 +46,10 @@ def format(tree, depth=0):
 
 
 def get_indent(depth):
-    if depth == 1:
-        return INDENT
-    else:
-        return INDENT + (DEEP_INDENT * (depth - 1))
+    return ' ' * 2 + ' ' * 4 * (depth - 1)
 
 
-def to_s(value, depth):
+def to_string(value, depth):
     current_indent = get_indent(depth)
 
     if isinstance(value, dict):
@@ -60,7 +57,7 @@ def to_s(value, depth):
         for key, val in value.items():
             lines.append(
                 f"{INDENT + current_indent + DEEP_INDENT}{key}:"
-                f" {to_s(val, depth + 1)}")
+                f" {to_string(val, depth + 1)}")
         result = '\n'.join(lines)
         return f'{{\n{result}\n  {current_indent}}}'
     elif isinstance(value, bool):
