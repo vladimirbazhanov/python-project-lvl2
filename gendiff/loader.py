@@ -4,13 +4,31 @@ import yaml
 
 
 def load_file(file_path):
-    file_extension = pathlib.Path(file_path).suffix
+    file_type = pathlib.Path(file_path).suffix
+    file_content = open(file_path).read()
 
-    with (open(file_path)) as file:
-        if file_extension == '.json':
-            file_content = json.load(file)
-        elif file_extension in ['.yml', '.yaml']:
-            file_content = yaml.safe_load(file)
-        else:
-            raise Exception('File type not supported: ' + file_path)
-    return file_content
+    return parse_file_content(file_content, file_type)
+
+
+def parse_file_content(file_content, file_type):
+    parsers = {
+        '.json': parse_json,
+        '.yml': parse_yaml,
+        '.yaml': parse_yaml
+    }
+
+    parser = parsers.get(file_type, parser_not_supported)
+
+    return parser(file_content)
+
+
+def parse_json(data):
+    return json.loads(data)
+
+
+def parse_yaml(data):
+    return yaml.safe_load(data)
+
+
+def parser_not_supported(data):
+    Exception('File type not supported: ' + file_path)
