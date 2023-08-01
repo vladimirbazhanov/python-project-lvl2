@@ -1,6 +1,6 @@
 from gendiff.loader import load_file
 from gendiff.parser import generate_tree
-from gendiff.formatters.formatter import format_diff
+from gendiff.formatter import format_diff
 
 
 def generate_diff(file_path1, file_path2, format='stylish'):
