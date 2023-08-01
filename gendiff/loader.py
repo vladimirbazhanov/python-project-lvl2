@@ -31,4 +31,4 @@ def parse_yaml(data):
 
 
 def parser_not_supported(data):
-    Exception('File type not supported: ' + file_path)
+    Exception('File type not supported!')

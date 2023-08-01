@@ -15,12 +15,16 @@ params_set = [
 ]
 
 
-@pytest.mark.parametrize(argnames='prepared_files', argvalues=params_set, indirect=True)
+@pytest.mark.parametrize(argnames='prepared_files',
+                         argvalues=params_set,
+                         indirect=True)
 def test_generate_diff(prepared_files):
     file1_path, file2_path, expected_result, formatter_name = prepared_files
 
     result = generate_diff(file1_path, file2_path, formatter_name)
     if formatter_name == 'json':
-        assert DeepDiff(json.loads(result), json.loads(expected_result), ignore_order=True) == {}
+        assert DeepDiff(json.loads(result),
+                        json.loads(expected_result),
+                        ignore_order=True) == {}
     else:
         assert result == expected_result
