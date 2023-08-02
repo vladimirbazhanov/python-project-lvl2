@@ -21,9 +21,9 @@ def format(tree, depth=0):
 
         elif node['kind'] == 'changed':
             line_1 = f"{get_indent(depth, 'removed')}{key}:" \
-                     f" {to_string(node['value'][0], depth)}\n"
+                     f" {to_string(value[0], depth)}\n"
             line_2 = f"{get_indent(depth, 'added')}{key}:" \
-                     f" {to_string(node['value'][1], depth)}"
+                     f" {to_string(value[1], depth)}"
             return line_1 + line_2
 
     children = sorted(tree.get('children'), key=lambda node: node['key'])
