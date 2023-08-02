@@ -8,4 +8,6 @@
 
 ## Проект "Вычислитель отличий"
 
+Демонстрация работы приложения (включает все шаги):
+
 [![asciicast](https://asciinema.org/a/dLg3nbcq3zHcluY8Gf9xIQwEg.svg)](https://asciinema.org/a/dLg3nbcq3zHcluY8Gf9xIQwEg)
