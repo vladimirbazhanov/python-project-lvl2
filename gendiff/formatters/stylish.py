@@ -1,39 +1,28 @@
 import itertools
 
 
-INDENT = '  '
-DEEP_INDENT = '  '
-ADDED = '+'
-REMOVED = '-'
-
-
 def format(tree, depth=0):
-
     def iter_(node, depth):
-        if node['kind'] == 'removed':
-            return f"{get_indent(depth, node['kind'])}{node['key']}:" \
-                   f" {to_string(node['value'], depth)}"
+        kind = node['kind']
+        value = node.get('value', None)
+        key = node['key']
 
-        elif node['kind'] == 'added':
-            return f"{get_indent(depth, node['kind'])}{node['key']}:" \
-                   f" {to_string(node['value'], depth)}"
+        if kind == 'added' or kind == 'removed' or kind == 'unchanged':
+            return f"{get_indent(depth, kind)}{key}: {to_string(value, depth)}"
 
-        elif node['kind'] == 'nested':
+        elif kind == 'nested':
             node_children = sorted(
                 node['children'], key=lambda item: item['key'])
             nested_lines = map(
                 lambda child: iter_(child, depth + 1), node_children)
             result = '\n'.join(nested_lines)
-            return f"{get_indent(depth, node['kind'])}{node['key']}: {{\n{result}\n{get_indent(depth, node['kind'])}}}"
-
-        elif node['kind'] == 'unchanged':
-            return f"{get_indent(depth, node['kind'])}{node['key']}:" \
-                   f" {to_string(node['value'], depth)}"
+            return f"{get_indent(depth, kind)}{key}:" \
+                   f" {{\n{result}\n{get_indent(depth, kind)}}}"
 
         elif node['kind'] == 'changed':
-            line_1 = f"{get_indent(depth, 'removed')}{node['key']}:" \
+            line_1 = f"{get_indent(depth, 'removed')}{key}:" \
                      f" {to_string(node['value'][0], depth)}\n"
-            line_2 = f"{get_indent(depth, 'added')}{node['key']}:" \
+            line_2 = f"{get_indent(depth, 'added')}{key}:" \
                      f" {to_string(node['value'][1], depth)}"
             return line_1 + line_2
 
@@ -43,7 +32,16 @@ def format(tree, depth=0):
     return '\n'.join(result)
 
 
-def get_indent(depth, sign=None):
+def get_indent(depth, sign_type=None):
+    indent_line = (' ' * 4 * depth)[:-2]
+    sign = get_sign(sign_type)
+
+    if sign:
+        indent_line = indent_line + f"{sign} "
+    return indent_line
+
+
+def get_sign(sign_type=None):
     signs = {
         'added': '+',
         'removed': '-',
@@ -51,11 +49,7 @@ def get_indent(depth, sign=None):
         'nested': ' ',
         'key': ' '
     }
-    sign = signs.get(sign, None)
-    indent_line = (' ' * 4 * depth)[:-2]
-    if sign:
-        indent_line = indent_line + f"{sign} "
-    return indent_line
+    return signs.get(sign_type, None)
 
 
 def to_string(value, depth):
